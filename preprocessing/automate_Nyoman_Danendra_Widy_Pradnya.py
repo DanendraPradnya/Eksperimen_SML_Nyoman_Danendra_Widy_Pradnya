@@ -50,8 +50,8 @@ def preprocess_to_csv(file_path, target_col='is_fraud', output_prefix='processed
     test_final = pd.concat([X_test, y_test.reset_index(drop=True)], axis=1)
     
     # Simpan ke CSV
-    train_path = f"{output_prefix}_train.csv"
-    test_path = f"{output_prefix}_test.csv"
+    train_path = f"preprocessing/{output_prefix}_train.csv"
+    test_path = f"preprocessing/{output_prefix}_test.csv"
     
     train_final.to_csv(train_path, index=False)
     test_final.to_csv(test_path, index=False)
