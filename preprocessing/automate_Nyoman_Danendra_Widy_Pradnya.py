@@ -38,25 +38,18 @@ def preprocess_to_csv(file_path, target_col='is_fraud', output_prefix='processed
     # Rekonstruksi DataFrame
     cat_names = preprocessor.named_transformers_['cat'].get_feature_names_out(categorical_cols).tolist()
     all_feature_names = numerical_cols + cat_names + binary_cols
-    X_processed = pd.DataFrame(X_processed_array, columns=all_feature_names)
     
-    # Split Data (80% Train, 20% Test)
-    X_train, X_test, y_train, y_test = train_test_split(
-        X_processed, y, test_size=0.2, random_state=42, stratify=y
-    )
+    df_final = pd.DataFrame(X_processed_array, columns=all_feature_names)
+    df_final[target_col] = y.values
     
-    # Gabungkan kembali dengan Target untuk disimpan ke CSV
-    train_final = pd.concat([X_train, y_train.reset_index(drop=True)], axis=1)
-    test_final = pd.concat([X_test, y_test.reset_index(drop=True)], axis=1)
+        
     
     # Simpan ke CSV
-    train_path = f"./preprocessing/{output_prefix}_train.csv"
-    test_path = f"./preprocessing/{output_prefix}_test.csv"
+    processed_data_path = f"./membangun_model/credit_card_fraud_{output_prefix}.csv"
     
-    train_final.to_csv(train_path, index=False)
-    test_final.to_csv(test_path, index=False)
+    df_final.to_csv(processed_data_path, index=False)
     
-    print(f"File berhasil disimpan: {train_path} dan {test_path}")
+    print(f"File berhasil disimpan: {processed_data_path}")
 
 if __name__ == "__main__":
     preprocess_to_csv('credit_card_fraud_raw.csv')
