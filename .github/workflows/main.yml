@@ -31,7 +31,7 @@ jobs:
       run: |
         git config --local user.email "github-actions[bot]@users.noreply.github.com"
         git config --local user.name "github-actions[bot]"
-        git add *.csv
+        git add membangun_model/*.csv
         # Commit hanya jika ada perubahan pada file CSV
-        git commit -m "Update processed datasets (CSV) [skip ci]" || echo "No changes to commit"
+        git commit -m "Update processed datasets in data/processed [skip ci]" || echo "No changes to commit"
         git push
