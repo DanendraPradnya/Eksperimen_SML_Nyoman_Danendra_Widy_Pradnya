@@ -25,7 +25,7 @@ jobs:
         pip install pandas scikit-learn numpy
 
     - name: Run Preprocessing
-      run: python preprocess.py
+      run: python automate_Nyoman_Danendra_Widy_Pradnya.py
 
     - name: Commit and Push CSV Changes
       run: |
