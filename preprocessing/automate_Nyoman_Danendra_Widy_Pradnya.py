@@ -1,15 +1,19 @@
 import pandas as pd
 import numpy as np
+import os
 from sklearn.preprocessing import StandardScaler, OneHotEncoder
 from sklearn.compose import ColumnTransformer
 from sklearn.model_selection import train_test_split
 
-def preprocess_to_csv(file_path, target_col='is_fraud', output_prefix='processed'):
+def preprocess_to_csv(file_path, target_col='is_fraud', output_prefix='processed', output_dir='membangun_model/'):
+    if not os.path.exists(output_dir):
+        os.makedirs(output_dir)
+        print(f"Folder {output_dir} berhasil dibuat.")
+    
     # Muat Dataset
     df = pd.read_csv(file_path)
     
     # Pembersihan Kolom
-    # transaction_id dihapus, cardholder_age tetap disimpan karena akan diproses
     drop_cols = ['transaction_id', 'cardholder_age']
     df_clean = df.drop(columns=drop_cols)
     
@@ -45,10 +49,8 @@ def preprocess_to_csv(file_path, target_col='is_fraud', output_prefix='processed
         
     
     # Simpan ke CSV
-    processed_data_path = f"./membangun_model/credit_card_fraud_{output_prefix}.csv"
-    
+    processed_data_path = os.path.join(output_dir, f"credit_card_fraud_{output_prefix}.csv")
     df_final.to_csv(processed_data_path, index=False)
-    
     print(f"File berhasil disimpan: {processed_data_path}")
 
 if __name__ == "__main__":
